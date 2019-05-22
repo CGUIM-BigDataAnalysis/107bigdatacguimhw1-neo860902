@@ -20,8 +20,11 @@ X103106<-inner_join(X103,X106,by="大職業別")
 X103106$"薪資比較"<-(X106$"大學-薪資")/(X103$"大學-薪資")
 X103106compare1<-filter(X103106,X103106$"薪資比較">1)
 X103106compare1<-arrange(X103106compare1,desc(X103106compare1$"薪資比較"))
+X103106compare1<-head(X103106compare1,10)
+knitr::kable(X103106compare1)
 X103106compare2<-filter(X103106,X103106$"薪資比較">1.05)
 X103106compare2<-arrange(X103106compare2,desc(X103106compare2$"薪資比較"))
+knitr::kable(X103106compare2)
 Job<-strsplit (X103106filter$"大職業別","-")
 mainjob<-c()
 for(n in 1:58){
@@ -37,7 +40,7 @@ all1<-rbind(head(X103mf,10),
             head(X104mf,10),
             head(X105mf,10),
             head(X106mf,10))
-
+knitr::kable(all1)
 
 X103mf1<-filter(X103,X103$"經常性薪資-女/男">100)
 X104mf1<-filter(X104,X104$"經常性薪資-女/男">100)
@@ -48,10 +51,14 @@ all2<-rbind(head(X103mf1,10),
             head(X105mf1,10),
             head(X106mf1,10))
 all2<-arrange(all2,desc(all2$"經常性薪資-女/男"))
-
+knitr::kable(all2)
 X106$"研究所及以上-薪資"<-as.numeric((X106$"研究所及以上-薪資"))
 X106$"大學-薪資"<-as.numeric((X106$"大學-薪資"))
 X106$Cost<-(X106$"研究所及以上-薪資"/X106$"大學-薪資")
 Cost<-head(arrange(X106,desc(X106$Cost)),10)
-
+knitr::kable(Cost)
 myjob<-X106[c(71,113,127,129),c(2,11,13)]
+knitr::kable(myjob)
+myjobSalary<-myjob
+myjobSalary$"薪資比較"<-(myjob$"研究所及以上-薪資"-myjob$"大學-薪資")
+knitr::kable(myjobSalary)
